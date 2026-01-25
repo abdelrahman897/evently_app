@@ -1,0 +1,16 @@
+flutter_native_splash:
+   android: true
+   ios: true
+   web: true
+   color: "#F4F7FF"
+   image: assets/images/evently_splash_background_img.png
+   branding: assets/images/evently_branding_background_img.png
+   branding_mode: bottom                # default bottom
+   branding_bottom_padding: 8          # default 0
+   fullscreen: true                # default false
+
+   android_12:
+     color: "#F4F7FF"
+     image: assets/images/evently_splash_background_img.png
+     icon_background_color: "#F4F7FF"
+     branding: assets/images/evently_branding_background_img.png
