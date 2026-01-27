@@ -1,10 +1,10 @@
-import 'package:evently_app/core/constant/app_strings.dart';
 import 'package:evently_app/core/gen/assets.gen.dart';
+import 'package:evently_app/core/l10n/app_localizations.dart';
 
 class OnboardingModel {
   String imagePath;
-  String titleText;
-  String bodyText;
+  String Function(AppLocalizations) titleText;
+  String Function(AppLocalizations) bodyText;
   bool isFirstPage;
 
   OnboardingModel({
@@ -14,27 +14,26 @@ class OnboardingModel {
     this.isFirstPage = false,
   });
 
-  List<OnboardingModel> onboardingList = [
-    OnboardingModel(
-      imagePath: Assets.images.onboardingFirstBackgroundImg.path,
-      titleText: AppStrings.onboardingFirstTitleText,
-      bodyText: AppStrings.onboardingFirstBodyText,
-      isFirstPage: true,
-    ),
-    OnboardingModel(
-      imagePath: Assets.images.onboardingSecondBackgroundImg.path,
-      titleText: AppStrings.onboardingSecondTitleText,
-      bodyText: AppStrings.onboardingSecondBodyText,
-    ),
-    OnboardingModel(
-      imagePath: Assets.images.onboardingThirdBackgroundImg.path,
-      titleText: AppStrings.onboardingThirdTitleText,
-      bodyText: AppStrings.onboardingThirdBodyText,
-    ),
-    OnboardingModel(
-      imagePath: Assets.images.onboardingFourthBackgroundImg.path,
-      titleText: AppStrings.onboardingFourthTitleText,
-      bodyText: AppStrings.onboardingFourthBodyText,
-    ),
+static  List<OnboardingModel> onboardingList = [
+  OnboardingModel(
+    imagePath: Assets.images.onboardingFirstBackgroundImg.path,
+    titleText: (l10n) => l10n.onboardingFirstTitle,
+    bodyText: (l10n) => l10n.onboardingFirstBody,
+  ),
+  OnboardingModel(
+    imagePath: Assets.images.onboardingSecondBackgroundImg.path,
+    titleText: (l10n) => l10n.onboardingSecondTitle,
+    bodyText: (l10n) => l10n.onboardingSecondBody,
+  ),
+  OnboardingModel(
+    imagePath: Assets.images.onboardingThirdBackgroundImg.path,
+    titleText: (l10n) => l10n.onboardingThirdTitle,
+    bodyText: (l10n) => l10n.onboardingThirdBody,
+  ),
+  OnboardingModel(
+    imagePath: Assets.images.onboardingFourthBackgroundImg.path,
+    titleText: (l10n) => l10n.onboardingFourthTitle,
+    bodyText: (l10n) => l10n.onboardingFourthBody,
+  ),
   ];
 }

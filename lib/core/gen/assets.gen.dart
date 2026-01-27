@@ -52,14 +52,46 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google_icn.svg
   SvgGenImage get googleIcn => const SvgGenImage('assets/icons/google_icn.svg');
 
+  /// File path: assets/icons/heart_active_icn.svg
+  SvgGenImage get heartActiveIcn =>
+      const SvgGenImage('assets/icons/heart_active_icn.svg');
+
+  /// File path: assets/icons/heart_icn.svg
+  SvgGenImage get heartIcn => const SvgGenImage('assets/icons/heart_icn.svg');
+
+  /// File path: assets/icons/heart_in_active_icn.svg
+  SvgGenImage get heartInActiveIcn =>
+      const SvgGenImage('assets/icons/heart_in_active_icn.svg');
+
+  /// File path: assets/icons/home_active_icn.svg
+  SvgGenImage get homeActiveIcn =>
+      const SvgGenImage('assets/icons/home_active_icn.svg');
+
+  /// File path: assets/icons/home_in_active_icn.svg
+  SvgGenImage get homeInActiveIcn =>
+      const SvgGenImage('assets/icons/home_in_active_icn.svg');
+
+  /// File path: assets/icons/lock_icn.svg
+  SvgGenImage get lockIcn => const SvgGenImage('assets/icons/lock_icn.svg');
+
+  /// File path: assets/icons/logout_icn.svg
+  SvgGenImage get logoutIcn => const SvgGenImage('assets/icons/logout_icn.svg');
+
   /// File path: assets/icons/moon_icn.svg
   SvgGenImage get moonIcn => const SvgGenImage('assets/icons/moon_icn.svg');
+
+  /// File path: assets/icons/search_icn.svg
+  SvgGenImage get searchIcn => const SvgGenImage('assets/icons/search_icn.svg');
 
   /// File path: assets/icons/sms_icn.svg
   SvgGenImage get smsIcn => const SvgGenImage('assets/icons/sms_icn.svg');
 
   /// File path: assets/icons/sun_icn.svg
   SvgGenImage get sunIcn => const SvgGenImage('assets/icons/sun_icn.svg');
+
+  /// File path: assets/icons/user_active_icn.svg
+  SvgGenImage get userActiveIcn =>
+      const SvgGenImage('assets/icons/user_active_icn.svg');
 
   /// File path: assets/icons/user_icn.svg
   SvgGenImage get userIcn => const SvgGenImage('assets/icons/user_icn.svg');
@@ -68,9 +100,18 @@ class $AssetsIconsGen {
   List<SvgGenImage> get values => [
     eyeSlashIcn,
     googleIcn,
+    heartActiveIcn,
+    heartIcn,
+    heartInActiveIcn,
+    homeActiveIcn,
+    homeInActiveIcn,
+    lockIcn,
+    logoutIcn,
     moonIcn,
+    searchIcn,
     smsIcn,
     sunIcn,
+    userActiveIcn,
     userIcn,
   ];
 }
@@ -110,6 +151,14 @@ class $AssetsImagesGen {
   AssetGenImage get onboardingThirdBackgroundImg =>
       const AssetGenImage('assets/images/onboarding_third_background_img.png');
 
+  /// File path: assets/images/profile_background_img.png
+  AssetGenImage get profileBackgroundImg =>
+      const AssetGenImage('assets/images/profile_background_img.png');
+
+  /// File path: assets/images/sport_light_background_img.png
+  AssetGenImage get sportLightBackgroundImg =>
+      const AssetGenImage('assets/images/sport_light_background_img.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
     eventlyBrandingBackgroundImg,
@@ -120,6 +169,8 @@ class $AssetsImagesGen {
     onboardingFourthBackgroundImg,
     onboardingSecondBackgroundImg,
     onboardingThirdBackgroundImg,
+    profileBackgroundImg,
+    sportLightBackgroundImg,
   ];
 }
 

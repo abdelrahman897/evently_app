@@ -12,6 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
   flutter_svg:
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.6
@@ -30,13 +34,13 @@ dev_dependencies:
 
 flutter_gen:
   output: lib/core/gen/
-
   integrations:
     image: true
     flutter_svg: true
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/images/

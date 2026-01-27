@@ -6,6 +6,7 @@ class CustomAppBarWidget extends StatelessWidget
   final Widget customTitleWidget;
   final List<Widget>? customActionListWidget;
 
+
   const CustomAppBarWidget({
     super.key,
     this.customLeadingWidget,
@@ -16,7 +17,7 @@ class CustomAppBarWidget extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: customLeadingWidget,
+      leading:  customLeadingWidget,
       title: customTitleWidget,
       actions: customActionListWidget,
     );
