@@ -298,6 +298,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
+
+  /// No description provided for @titleHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back ✨'**
+  String get titleHome;
+
+  /// No description provided for @subTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdelrahman Elsayed'**
+  String get subTitle;
+
+  /// No description provided for @sportText.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get sportText;
+
+  /// No description provided for @allText.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allText;
+
+  /// No description provided for @meetingText.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting'**
+  String get meetingText;
+
+  /// No description provided for @exhibitionText.
+  ///
+  /// In en, this message translates to:
+  /// **'Exhibition'**
+  String get exhibitionText;
+
+  /// No description provided for @birthdayText.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get birthdayText;
+
+  /// No description provided for @bookClubText.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Club'**
+  String get bookClubText;
+
+  /// No description provided for @fakeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdelrahman Elsayed'**
+  String get fakeEmail;
+
+  /// No description provided for @eventDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Event details'**
+  String get eventDetails;
+
+  /// No description provided for @addEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Add event'**
+  String get addEvent;
+
+  /// No description provided for @eventDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Date'**
+  String get eventDate;
+
+  /// No description provided for @eventTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Time'**
+  String get eventTime;
+
+  /// No description provided for @chooseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date'**
+  String get chooseDate;
+
+  /// No description provided for @chooseTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose time'**
+  String get chooseTime;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get title;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @eventTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Title'**
+  String get eventTitle;
+
+  /// No description provided for @eventDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Description....'**
+  String get eventDescription;
+
+  /// No description provided for @editEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit event'**
+  String get editEvent;
+
+  /// No description provided for @updateEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Update event'**
+  String get updateEvent;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode'**
+  String get darkMode;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

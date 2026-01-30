@@ -109,4 +109,73 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profile => 'الملف الشخصي';
+
+  @override
+  String get titleHome => 'أهلاً بك من جديد ✨';
+
+  @override
+  String get subTitle => 'عبدالرحمن السيد';
+
+  @override
+  String get sportText => 'رياضة';
+
+  @override
+  String get allText => 'الكل';
+
+  @override
+  String get meetingText => 'اجتماع';
+
+  @override
+  String get exhibitionText => 'معرض';
+
+  @override
+  String get birthdayText => 'عيد ميلاد';
+
+  @override
+  String get bookClubText => 'نادي الكتاب';
+
+  @override
+  String get fakeEmail => 'عبد الرحمن السيد';
+
+  @override
+  String get eventDetails => 'تفاصيل الحدث';
+
+  @override
+  String get addEvent => 'إضافة حدث';
+
+  @override
+  String get eventDate => 'تاريخ الحدث';
+
+  @override
+  String get eventTime => 'وقت الحدث';
+
+  @override
+  String get chooseDate => 'اختر التاريخ';
+
+  @override
+  String get chooseTime => 'اختر الوقت';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get title => 'العنوان';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get eventTitle => 'عنوان الحدث';
+
+  @override
+  String get eventDescription => 'وصف الحدث....';
+
+  @override
+  String get editEvent => 'تعديل الحدث';
+
+  @override
+  String get updateEvent => 'تحديث الحدث';
+
+  @override
+  String get darkMode => 'الوضع الداكن';
 }

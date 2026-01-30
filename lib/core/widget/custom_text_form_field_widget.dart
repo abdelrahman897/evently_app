@@ -6,7 +6,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool isPassword;
-  final Widget customPrefixWidget;
+  final Widget? customPrefixWidget;
   final Widget? customSuffixWidget;
 
   const CustomTextFormFieldWidget({
@@ -14,8 +14,8 @@ class CustomTextFormFieldWidget extends StatelessWidget {
     required this.text,
     this.controller,
     this.validator,
-     this.isPassword = false,
-    required this.customPrefixWidget,
+    this.isPassword = false,
+    this.customPrefixWidget,
     this.customSuffixWidget,
   });
 

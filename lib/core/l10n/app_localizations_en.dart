@@ -109,4 +109,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile => 'Profile';
+
+  @override
+  String get titleHome => 'Welcome Back ✨';
+
+  @override
+  String get subTitle => 'Abdelrahman Elsayed';
+
+  @override
+  String get sportText => 'Sport';
+
+  @override
+  String get allText => 'All';
+
+  @override
+  String get meetingText => 'Meeting';
+
+  @override
+  String get exhibitionText => 'Exhibition';
+
+  @override
+  String get birthdayText => 'Birthday';
+
+  @override
+  String get bookClubText => 'Book Club';
+
+  @override
+  String get fakeEmail => 'Abdelrahman Elsayed';
+
+  @override
+  String get eventDetails => 'Event details';
+
+  @override
+  String get addEvent => 'Add event';
+
+  @override
+  String get eventDate => 'Event Date';
+
+  @override
+  String get eventTime => 'Event Time';
+
+  @override
+  String get chooseDate => 'Choose date';
+
+  @override
+  String get chooseTime => 'Choose time';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get title => 'Title';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get eventTitle => 'Event Title';
+
+  @override
+  String get eventDescription => 'Event Description....';
+
+  @override
+  String get editEvent => 'Edit event';
+
+  @override
+  String get updateEvent => 'Update event';
+
+  @override
+  String get darkMode => 'Dark mode';
 }

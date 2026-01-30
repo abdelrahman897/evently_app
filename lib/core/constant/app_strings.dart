@@ -33,4 +33,29 @@ abstract class AppStrings {
   static const String homeText = "Home";
   static const String favouriteText = "Favourite";
   static const String profileText = "Profile";
+  static const String titleHomeText = "Welcome Back ✨";
+  static const String subTitleHomeText = "Abdelrahman Elsayed";
+  static const String sportText = "Sport";
+  static const String allText = "All";
+  static const String meetingText = "Meeting";
+  static const String exhibitionText = "Exhibition";
+  static const String birthdayText = "Birthday";
+  static const String bookClubText = "Book Club";
+  static const String fakeEmailText = "Abdelrahman Elsayed";
+  static const String fakePasswordText = "abdelrahmanelsayed.route@gmail.com";
+  static const String eventDetailsText = "Event details";
+  static const String addEventText = "Add event";
+  static const String eventDateText = "Event Date";
+  static const String eventTimeText = "Event Time";
+  static const String chooseDateText = "Choose date";
+  static const String chooseTimeText = "Choose time";
+  static const String logoutText = "Logout";
+  static const String titleText = "Title";
+  static const String descriptionText = "Description";
+  static const String eventTitleText = "Event Title";
+  static const String eventDescriptionText = "Event Description....";
+  static const String editEventText = "Edit event";
+  static const String updateEventText = "Update event";
+  static const String darkModeText = "Dark mode";
+
 }

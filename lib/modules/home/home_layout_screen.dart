@@ -1,4 +1,3 @@
-import 'package:evently_app/core/constant/app_strings.dart';
 import 'package:evently_app/core/gen/assets.gen.dart';
 import 'package:evently_app/core/l10n/app_localizations.dart';
 import 'package:evently_app/modules/home/favourite/favourite_screen.dart';
@@ -26,7 +25,6 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         onTap: (index){
           selectedIndex = index;
           setState(() {
-
           });
         },
         currentIndex: selectedIndex,

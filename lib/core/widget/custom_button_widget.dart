@@ -30,7 +30,7 @@ class CustomButtonWidget extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: backgroundColor ?? AppColor.primaryColor,
-          borderRadius:isNav ? BorderRadius.all(Radius.circular(24)) : BorderRadius.circular(8),
+          borderRadius:isNav ? BorderRadius.all(Radius.circular(24)) : BorderRadius.circular(16),
         ),
         child: customChildWidget,
       ),

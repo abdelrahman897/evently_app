@@ -45,6 +45,19 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/calendar_icn.svg
+  SvgGenImage get calendarIcn =>
+      const SvgGenImage('assets/icons/calendar_icn.svg');
+
+  /// File path: assets/icons/clock_icn.svg
+  SvgGenImage get clockIcn => const SvgGenImage('assets/icons/clock_icn.svg');
+
+  /// File path: assets/icons/delete_icn.svg
+  SvgGenImage get deleteIcn => const SvgGenImage('assets/icons/delete_icn.svg');
+
+  /// File path: assets/icons/edit_icn.svg
+  SvgGenImage get editIcn => const SvgGenImage('assets/icons/edit_icn.svg');
+
   /// File path: assets/icons/eye_slash_icn.svg
   SvgGenImage get eyeSlashIcn =>
       const SvgGenImage('assets/icons/eye_slash_icn.svg');
@@ -98,6 +111,10 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+    calendarIcn,
+    clockIcn,
+    deleteIcn,
+    editIcn,
     eyeSlashIcn,
     googleIcn,
     heartActiveIcn,
