@@ -1,17 +1,18 @@
 import 'package:evently_app/core/gen/assets.gen.dart';
+import 'package:evently_app/core/model/event_data_model.dart';
 import 'package:evently_app/core/theme/app_color.dart';
+import 'package:evently_app/core/utils/firestore/firestore_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventCardWidget extends StatefulWidget {
-  final String dateText;
-  final String bodyText;
+  final EventDataModel event;
   final void Function()? onTap;
 
   const EventCardWidget({
     super.key,
-    required this.dateText,
     this.onTap,
-    required this.bodyText,
+    required this.event,
   });
 
   @override
@@ -19,10 +20,10 @@ class EventCardWidget extends StatefulWidget {
 }
 
 class _EventCardWidgetState extends State<EventCardWidget> {
-  bool isActiveFavourite = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    bool isFav = widget.event.isFavourite;
     return Container(
       width: 343,
       height: 193,
@@ -30,7 +31,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
         image: DecorationImage(
-          image: Assets.images.sportLightBackgroundImg.provider(),
+          image: AssetImage(widget.event.categoryLightImage),
           fit: BoxFit.cover,
         ),
       ),
@@ -50,7 +51,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
               ),
               child: Align(
                 alignment: Alignment.center,
-                child: Text(widget.dateText, style: theme.textTheme.bodyLarge),
+                child: Text(DateFormat("dd MMM").format(widget.event.eventDate), style: theme.textTheme.bodyLarge),
               ),
             ),
           ),
@@ -66,7 +67,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                 children: [
                   Expanded(
                     child: Text(
-                      widget.bodyText,
+                      widget.event.eventDescription,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: AppColor.blackColor,
                       ),
@@ -74,12 +75,10 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                   ),
                   InkWell(
                     onTap: (){
-                      setState(() {
-                         isActiveFavourite = !isActiveFavourite;
-                      });
+                      FirestoreUtils.updateFavouriteStatus(widget.event);
                     },
                     child:
-                        isActiveFavourite
+                        isFav
                             ? Assets.icons.heartActiveIcn.svg(
                               width: 24,
                               height: 24,

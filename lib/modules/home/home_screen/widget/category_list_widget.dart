@@ -1,39 +1,46 @@
 
-import 'package:evently_app/modules/home/home_screen/widget/tab_item_widget.dart';
+import 'package:evently_app/core/l10n/app_localizations.dart';
+import 'package:evently_app/core/model/event_category_model.dart';
+import 'package:evently_app/core/theme/app_color.dart';
+import 'package:evently_app/core/widget/custom_choice_chip_widget.dart';
 import 'package:flutter/material.dart';
 
-class CategoryListWidget extends StatefulWidget {
-
+class CategoryListWidget extends StatelessWidget {
+  final int selectedItem;
+  final Function(int) onCategoryChanged;
   const CategoryListWidget({
-    super.key,
+    super.key, required this.onCategoryChanged, required this.selectedItem,
   });
-
-  @override
-  State<CategoryListWidget> createState() => _CategoryListWidgetState();
-}
-
-class _CategoryListWidgetState extends State<CategoryListWidget> {
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final appLocalization = AppLocalizations.of(context)!;
+    final categoryList = EventCategoryModel.categoryList;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
         height: 40,
-        child: DefaultTabController(
-          length: 6,
-          child: TabBar(
-            onTap: (index){
-              selectedIndex = index;
-              setState(() {
-              });
-            },
-            isScrollable: true,
-            indicator: BoxDecoration(),
-            dividerColor: Colors.transparent,
-            tabAlignment: TabAlignment.start,
-            labelPadding: EdgeInsets.symmetric(horizontal: 8),
-            tabs: List.generate(6, (index) => TabItemWidget(index: index,isActive: selectedIndex == index,)),
+        child:  SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(categoryList.length , (index) {
+              final isSelected = (selectedItem == index);
+              return CustomChoiceChipWidget(
+                title: categoryList[index].name(appLocalization),
+                customChildWidget: Icon(
+                  categoryList[index].icon,
+                  color:
+                  isSelected
+                      ? AppColor.whiteColor
+                      : AppColor.primaryColor,
+                ),
+                selected: isSelected,
+                onSelected:(selected) {
+                  if (selected) {
+                    onCategoryChanged(index);
+                  }
+                },
+              );
+            }),
           ),
         ),
       ),

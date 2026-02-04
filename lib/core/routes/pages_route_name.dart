@@ -7,6 +7,7 @@ abstract class PagesRouteName {
   static const String homeScreen = "/home-screen";
   static const String favouriteScreen = "/favourite-screen";
   static const String profileScreen = "/profile-screen";
-  static const String addEventScreen = "/ add-event-screen";
-
+  static const String addEventScreen = "/add-event-screen";
+  static const String editEventScreen = "/edit-event-screen";
+  static const String eventDetailsScreen = "/event-details-screen";
 }

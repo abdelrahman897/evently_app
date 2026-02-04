@@ -58,6 +58,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/edit_icn.svg
   SvgGenImage get editIcn => const SvgGenImage('assets/icons/edit_icn.svg');
 
+  /// File path: assets/icons/error_icn.svg
+  SvgGenImage get errorIcn => const SvgGenImage('assets/icons/error_icn.svg');
+
   /// File path: assets/icons/eye_slash_icn.svg
   SvgGenImage get eyeSlashIcn =>
       const SvgGenImage('assets/icons/eye_slash_icn.svg');
@@ -99,6 +102,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/sms_icn.svg
   SvgGenImage get smsIcn => const SvgGenImage('assets/icons/sms_icn.svg');
 
+  /// File path: assets/icons/success_icn.svg
+  SvgGenImage get successIcn =>
+      const SvgGenImage('assets/icons/success_icn.svg');
+
   /// File path: assets/icons/sun_icn.svg
   SvgGenImage get sunIcn => const SvgGenImage('assets/icons/sun_icn.svg');
 
@@ -109,12 +116,17 @@ class $AssetsIconsGen {
   /// File path: assets/icons/user_icn.svg
   SvgGenImage get userIcn => const SvgGenImage('assets/icons/user_icn.svg');
 
+  /// File path: assets/icons/warning_icn.png
+  AssetGenImage get warningIcn =>
+      const AssetGenImage('assets/icons/warning_icn.png');
+
   /// List of all assets
-  List<SvgGenImage> get values => [
+  List<dynamic> get values => [
     calendarIcn,
     clockIcn,
     deleteIcn,
     editIcn,
+    errorIcn,
     eyeSlashIcn,
     googleIcn,
     heartActiveIcn,
@@ -127,14 +139,32 @@ class $AssetsIconsGen {
     moonIcn,
     searchIcn,
     smsIcn,
+    successIcn,
     sunIcn,
     userActiveIcn,
     userIcn,
+    warningIcn,
   ];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/birthday_dark_background_img.png
+  AssetGenImage get birthdayDarkBackgroundImg =>
+      const AssetGenImage('assets/images/birthday_dark_background_img.png');
+
+  /// File path: assets/images/birthday_light_background_img.png
+  AssetGenImage get birthdayLightBackgroundImg =>
+      const AssetGenImage('assets/images/birthday_light_background_img.png');
+
+  /// File path: assets/images/book_club_dark_background_img.png
+  AssetGenImage get bookClubDarkBackgroundImg =>
+      const AssetGenImage('assets/images/book_club_dark_background_img.png');
+
+  /// File path: assets/images/book_club_light_background_img.png
+  AssetGenImage get bookClubLightBackgroundImg =>
+      const AssetGenImage('assets/images/book_club_light_background_img.png');
 
   /// File path: assets/images/evently_branding_background_img.png
   AssetGenImage get eventlyBrandingBackgroundImg =>
@@ -144,6 +174,14 @@ class $AssetsImagesGen {
   AssetGenImage get eventlySplashBackgroundImg =>
       const AssetGenImage('assets/images/evently_splash_background_img.png');
 
+  /// File path: assets/images/exhibition_dark_background_img.png
+  AssetGenImage get exhibitionDarkBackgroundImg =>
+      const AssetGenImage('assets/images/exhibition_dark_background_img.png');
+
+  /// File path: assets/images/exhibition_light_background_img.png
+  AssetGenImage get exhibitionLightBackgroundImg =>
+      const AssetGenImage('assets/images/exhibition_light_background_img.png');
+
   /// File path: assets/images/forget_password_background_img.png
   AssetGenImage get forgetPasswordBackgroundImg =>
       const AssetGenImage('assets/images/forget_password_background_img.png');
@@ -151,6 +189,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/header_logo_background_img.png
   AssetGenImage get headerLogoBackgroundImg =>
       const AssetGenImage('assets/images/header_logo_background_img.png');
+
+  /// File path: assets/images/meeting_dark_background_img.png
+  AssetGenImage get meetingDarkBackgroundImg =>
+      const AssetGenImage('assets/images/meeting_dark_background_img.png');
+
+  /// File path: assets/images/meeting_light_background_img.png
+  AssetGenImage get meetingLightBackgroundImg =>
+      const AssetGenImage('assets/images/meeting_light_background_img.png');
 
   /// File path: assets/images/onboarding_first_background_img.png
   AssetGenImage get onboardingFirstBackgroundImg =>
@@ -172,21 +218,34 @@ class $AssetsImagesGen {
   AssetGenImage get profileBackgroundImg =>
       const AssetGenImage('assets/images/profile_background_img.png');
 
+  /// File path: assets/images/sport_dark_background_img.png
+  AssetGenImage get sportDarkBackgroundImg =>
+      const AssetGenImage('assets/images/sport_dark_background_img.png');
+
   /// File path: assets/images/sport_light_background_img.png
   AssetGenImage get sportLightBackgroundImg =>
       const AssetGenImage('assets/images/sport_light_background_img.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    birthdayDarkBackgroundImg,
+    birthdayLightBackgroundImg,
+    bookClubDarkBackgroundImg,
+    bookClubLightBackgroundImg,
     eventlyBrandingBackgroundImg,
     eventlySplashBackgroundImg,
+    exhibitionDarkBackgroundImg,
+    exhibitionLightBackgroundImg,
     forgetPasswordBackgroundImg,
     headerLogoBackgroundImg,
+    meetingDarkBackgroundImg,
+    meetingLightBackgroundImg,
     onboardingFirstBackgroundImg,
     onboardingFourthBackgroundImg,
     onboardingSecondBackgroundImg,
     onboardingThirdBackgroundImg,
     profileBackgroundImg,
+    sportDarkBackgroundImg,
     sportLightBackgroundImg,
   ];
 }

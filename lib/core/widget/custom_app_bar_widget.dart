@@ -1,3 +1,4 @@
+import 'package:evently_app/core/extension/padding_extension.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBarWidget extends StatelessWidget
@@ -20,7 +21,7 @@ class CustomAppBarWidget extends StatelessWidget
       leading:  customLeadingWidget,
       title: customTitleWidget,
       actions: customActionListWidget,
-    );
+    ).setHorizontalPaddingOnWidget(16);
   }
 
   @override

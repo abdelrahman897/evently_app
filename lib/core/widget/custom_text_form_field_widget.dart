@@ -7,6 +7,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool isPassword;
   final Widget? customPrefixWidget;
+  final int maxLines ;
   final Widget? customSuffixWidget;
 
   const CustomTextFormFieldWidget({
@@ -17,6 +18,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
     this.isPassword = false,
     this.customPrefixWidget,
     this.customSuffixWidget,
+    this.maxLines = 1,
   });
 
   @override
@@ -28,6 +30,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
       style: theme.textTheme.bodyMedium,
       cursorColor: AppColor.darkGreyColor,
       obscureText: isPassword,
+      maxLines: maxLines,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColor.whiteColor,
@@ -45,10 +48,10 @@ class CustomTextFormFieldWidget extends StatelessWidget {
         ),
         hintStyle: theme.textTheme.bodyMedium,
         hintText: text,
-        prefixIcon: Padding(
+        prefixIcon: customPrefixWidget != null ? Padding(
           padding: const EdgeInsets.all(12.0),
           child: customPrefixWidget,
-        ),
+        ): null,
         suffixIcon: Padding(
           padding: const EdgeInsets.all(12.0),
           child: customSuffixWidget,
