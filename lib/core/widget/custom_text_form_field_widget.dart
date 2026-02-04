@@ -26,6 +26,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return TextFormField(
       controller: controller,
+      autovalidateMode: AutovalidateMode.always,
       validator: validator,
       style: theme.textTheme.bodyMedium,
       cursorColor: AppColor.darkGreyColor,

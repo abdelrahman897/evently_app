@@ -3,9 +3,11 @@ import 'package:evently_app/core/gen/assets.gen.dart';
 import 'package:evently_app/core/l10n/app_localizations.dart';
 import 'package:evently_app/core/routes/pages_route_name.dart';
 import 'package:evently_app/core/theme/app_color.dart';
+import 'package:evently_app/core/utils/authentication/firebase_auth/firebase_auth_utils.dart';
 import 'package:evently_app/core/widget/custom_button_widget.dart';
 import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -93,14 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(appLocalization.language),
                     Spacer(),
-                    InkWell(
-                      onTap: () {
-
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: AppColor.primaryColor,
-                      ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: AppColor.primaryColor,
                     ),
                   ],
                 ),
@@ -112,28 +109,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               lengthOfHeight: 48,
               backgroundColor: AppColor.whiteColor,
               onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  PagesRouteName.signInScreen,
-                  (route) => false,
-                );
-              },
+                  EasyLoading.show();
+                  FirebaseAuthUtils.singOut().then((value){
+                    EasyLoading.dismiss();
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      PagesRouteName.signInScreen,
+                          (route) => false,
+                    );
+                  });
+                },
               customChildWidget: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
                     Text(appLocalization.logout),
                     Spacer(),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          PagesRouteName.signInScreen,
-                          (route) => false,
-                        );
-                      },
-                      child: Assets.icons.logoutIcn.svg(width: 24, height: 24),
-                    ),
+                    Assets.icons.logoutIcn.svg(width: 24, height: 24),
                   ],
                 ),
               ),

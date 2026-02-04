@@ -2,12 +2,15 @@ import 'package:evently_app/core/extension/padding_extension.dart';
 import 'package:evently_app/core/gen/assets.gen.dart';
 import 'package:evently_app/core/l10n/app_localizations.dart';
 import 'package:evently_app/core/routes/pages_route_name.dart';
+import 'package:evently_app/core/services/toast_message.dart';
 import 'package:evently_app/core/theme/app_color.dart';
+import 'package:evently_app/core/utils/authentication/firebase_auth/firebase_auth_utils.dart';
 import 'package:evently_app/core/widget/custom_app_bar_widget.dart';
 import 'package:evently_app/core/widget/custom_elevated_button_widget.dart';
 import 'package:evently_app/core/widget/custom_text_form_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SignInScreen extends StatefulWidget {
 
@@ -67,6 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox(height: 16),
               CustomTextFormFieldWidget(
                 controller: passwordController,
+                maxLines: 1,
                 validator: (value){
                   if ( value == null || value.isEmpty) {
                     return "Password is required , Check Password.";
@@ -122,7 +126,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: CustomElevatedButtonWidget(
                       onPressed: (){
                         if(_formKey.currentState!.validate()){
-                          Navigator.pushNamedAndRemoveUntil(context, PagesRouteName.homeLayoutScreen,(route) => false,);
+                          EasyLoading.show();
+                          FirebaseAuthUtils.singInWithEmailAndPassword(emailController.text, passwordController.text).then((value){
+                            EasyLoading.dismiss();
+                            Navigator.pushNamedAndRemoveUntil(context, PagesRouteName.homeLayoutScreen,(route) => false,);
+                          });
+
                         }
                       },
                       customChildWidget: Text(appLocalizations.login,style: theme.textTheme.titleLarge,textAlign: TextAlign.center,),
@@ -185,7 +194,18 @@ class _SignInScreenState extends State<SignInScreen> {
                 children: [
                   Expanded(
                     child: CustomElevatedButtonWidget(
-                      onPressed: (){},
+                      onPressed: (){
+                        {
+                          EasyLoading.show();
+                          FirebaseAuthUtils.signInWithGoogle().then((userCredential) {
+                            EasyLoading.dismiss();
+                            if (userCredential != null) {
+                              ToastMessage.showSuccessMessage("Login with Google successful!");
+                              Navigator.pushNamedAndRemoveUntil(context, PagesRouteName.homeLayoutScreen, (route) => false);
+                            }
+                          });
+                        }
+                      },
                       backgroundColor: AppColor.whiteColor,
                       customChildWidget:
                       Row(

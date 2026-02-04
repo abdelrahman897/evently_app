@@ -1,14 +1,17 @@
-
 import 'package:evently_app/core/extension/padding_extension.dart';
 import 'package:evently_app/core/gen/assets.gen.dart';
 import 'package:evently_app/core/l10n/app_localizations.dart';
 import 'package:evently_app/core/routes/pages_route_name.dart';
+import 'package:evently_app/core/services/toast_message.dart';
 import 'package:evently_app/core/theme/app_color.dart';
+import 'package:evently_app/core/utils/authentication/firebase_auth/firebase_auth_utils.dart';
 import 'package:evently_app/core/widget/custom_app_bar_widget.dart';
 import 'package:evently_app/core/widget/custom_elevated_button_widget.dart';
 import 'package:evently_app/core/widget/custom_text_form_field_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -22,7 +25,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final RegExp regexEmail = RegExp(
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
   );
@@ -36,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final appLocalizations =AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: CustomAppBarWidget(
         customTitleWidget: Assets.images.headerLogoBackgroundImg.image(
@@ -94,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: 16),
               CustomTextFormFieldWidget(
                 controller: passwordController,
+                maxLines: 1,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Password is required , Check Password.";
@@ -116,17 +121,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     });
                   },
                   child:
-                  isActivePassword
-                      ? Assets.icons.eyeSlashIcn.svg(width: 15, height: 15)
-                      : Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: AppColor.hintTextColor,
-                  ),
+                      isActivePassword
+                          ? Assets.icons.eyeSlashIcn.svg(width: 15, height: 15)
+                          : Icon(
+                            Icons.remove_red_eye_outlined,
+                            color: AppColor.hintTextColor,
+                          ),
                 ),
               ),
               SizedBox(height: 16),
               CustomTextFormFieldWidget(
                 controller: confirmPasswordController,
+                maxLines: 1,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Confirm Password is required , Check Confirm Password.";
@@ -148,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     setState(() {});
                   },
                   child:
-                  isActiveConfirmPassword
+                      isActiveConfirmPassword
                           ? Assets.icons.eyeSlashIcn.svg(width: 24, height: 24)
                           : Icon(
                             Icons.remove_red_eye_outlined,
@@ -161,9 +167,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   Expanded(
                     child: CustomElevatedButtonWidget(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          Navigator.pushReplacementNamed(context, PagesRouteName.signInScreen);
+                          EasyLoading.show();
+
+                          bool success =
+                              await FirebaseAuthUtils.singInWithEmailAndPassword(
+                                emailController.text,
+                                passwordController.text,
+                              );
+
+                          if (success) {
+                            var user = FirebaseAuth.instance.currentUser;
+                            await user?.reload();
+                            user =
+                                FirebaseAuth
+                                    .instance
+                                    .currentUser;
+
+                            if (user != null && user.emailVerified) {
+                              EasyLoading.dismiss();
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                PagesRouteName.homeLayoutScreen,
+                                (route) => false,
+                              );
+                            } else {
+                              EasyLoading.dismiss();
+                              ToastMessage.showErrorMessage(
+                                "Please verify your email first.",
+                              );
+                            }
+                          } else {
+                            EasyLoading.dismiss();
+                          }
                         }
                       },
                       customChildWidget: Text(
@@ -187,7 +224,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     WidgetSpan(
                       child: Bounceable(
                         onTap: () {
-                          Navigator.pushNamed(context, PagesRouteName.signInScreen);
+                          Navigator.pushNamed(
+                            context,
+                            PagesRouteName.signInScreen,
+                          );
                         },
                         child: Text(
                           appLocalizations.login,
@@ -232,7 +272,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Expanded(
                     child: CustomElevatedButtonWidget(
                       onPressed: () {
-
+                        EasyLoading.show();
+                        FirebaseAuthUtils.signInWithGoogle().then((userCredential) {
+                          EasyLoading.dismiss();
+                          if (userCredential != null) {
+                            ToastMessage.showSuccessMessage("Login with Google successful!");
+                            Navigator.pushNamedAndRemoveUntil(context, PagesRouteName.homeLayoutScreen, (route) => false);
+                          }
+                        });
                       },
                       customChildWidget: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
