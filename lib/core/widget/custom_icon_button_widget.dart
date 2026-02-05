@@ -3,22 +3,26 @@ import 'package:flutter/material.dart';
 
 class CustomIconButtonWidget extends StatelessWidget {
   final void Function()? onPressed;
-  const CustomIconButtonWidget({super.key, this.onPressed});
+  final bool isDark;
+  const CustomIconButtonWidget({super.key, this.onPressed, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed:onPressed ,
       style: IconButton.styleFrom(
-        backgroundColor: AppColor.whiteColor,
+        backgroundColor: isDark ? AppColor.secondDarkBlueColor: AppColor.whiteColor,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
+          side: isDark? BorderSide(
+            color: AppColor.lightBlueColor,
+          ):BorderSide.none,
         ),
       ),
       icon: Icon(
         Icons.arrow_back_ios,
-        color: AppColor.primaryColor,
+        color: isDark? AppColor.whiteColor :AppColor.primaryColor,
         size: 24,
       ),
     );

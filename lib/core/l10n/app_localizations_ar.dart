@@ -178,4 +178,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get darkMode => 'الوضع الداكن';
+
+  @override
+  String get selectText => 'اختر اللغة';
 }

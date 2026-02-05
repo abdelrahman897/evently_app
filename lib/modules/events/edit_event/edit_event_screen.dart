@@ -12,10 +12,12 @@ import 'package:evently_app/core/widget/custom_choice_chip_widget.dart';
 import 'package:evently_app/core/widget/custom_elevated_button_widget.dart';
 import 'package:evently_app/core/widget/custom_icon_button_widget.dart';
 import 'package:evently_app/core/widget/custom_text_form_field_widget.dart';
+import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EditEventScreen extends StatefulWidget {
   final EventDataModel event;
@@ -81,9 +83,12 @@ class _EditEventScreenState extends State<EditEventScreen> {
     final appLocalization = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final categoryList = EventCategoryModel.categoryList;
+    final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
+     bool  isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
     return Scaffold(
       appBar: CustomAppBarWidget(
         customLeadingWidget: CustomIconButtonWidget(
+          isDark: isDark,
           onPressed: () {
             Navigator.pushReplacementNamed(context, PagesRouteName.homeLayoutScreen);
           },
@@ -91,7 +96,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
         customTitleWidget: Text(
           appLocalization.editEvent,
           style: theme.textTheme.titleMedium?.copyWith(
-            color: AppColor.blackColor,
+            color: isDark? AppColor.whiteColor : AppColor.blackColor,
           ),
         ),
       ),
@@ -102,7 +107,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(EventCategoryModel.categoryList[selectedItem].lightImagePath),
+            Image.asset(isDark ? EventCategoryModel.categoryList[selectedItem].darkImagePath: EventCategoryModel.categoryList[selectedItem].lightImagePath),
             SizedBox(height: 16),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -116,7 +121,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                       color:
                       isSelected
                           ? AppColor.whiteColor
-                          : AppColor.primaryColor,
+                          : (isDark?AppColor.lightBlueColor :AppColor.primaryColor),
                     ),
                     selected: isSelected,
                     onSelected: (selected) {
@@ -132,11 +137,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
             Text(
               appLocalization.title,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColor.blackColor,
+                color: isDark? AppColor.whiteColor : AppColor.blackColor,
               ),
             ),
             SizedBox(height: 16),
-            CustomTextFormFieldWidget(text: appLocalization.eventTitle,controller: titleController,validator: (value) {
+            CustomTextFormFieldWidget(isDark:isDark,text: appLocalization.eventTitle,controller: titleController,validator: (value) {
               if (value == null || value.trim().isEmpty) {
                 return "Enter title";
               }
@@ -146,11 +151,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
             Text(
               appLocalization.description,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColor.blackColor,
+                color: isDark ? AppColor.whiteColor : AppColor.blackColor,
               ),
             ),
             SizedBox(height: 8),
-            CustomTextFormFieldWidget(text: appLocalization.eventDescription,controller: descriptionController,maxLines: 4, validator: (value) {
+            CustomTextFormFieldWidget(isDark:isDark,text: appLocalization.eventDescription,controller: descriptionController,maxLines: 4, validator: (value) {
               if (value == null || value.trim().isEmpty) {
                 return "Enter description";
               }
@@ -159,12 +164,12 @@ class _EditEventScreenState extends State<EditEventScreen> {
             SizedBox(height: 16),
             Row(
               children: [
-                Assets.icons.calendarIcn.svg(width: 24, height: 24),
+                Assets.icons.calendarIcn.svg(width: 24, height: 24,colorFilter: ColorFilter.mode(isDark?AppColor.lightBlueColor:AppColor.primaryColor, BlendMode.srcIn),),
                 SizedBox(width: 4),
                 Text(
                   appLocalization.eventDate,
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColor.blackColor,
+                    color: isDark ?AppColor.whiteColor  : AppColor.blackColor,
                   ),
                 ),
                 Spacer(),
@@ -177,9 +182,9 @@ class _EditEventScreenState extends State<EditEventScreen> {
                     DateFormat('dd MMM yyyy').format(selectedEventDate!)
                     :DateFormat('dd MMM yyyy').format(widget.event.eventDate),
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: AppColor.primaryColor,
+                      color: isDark? AppColor.lightBlueColor:AppColor.primaryColor,
                       decoration: TextDecoration.underline,
-                      decorationColor: AppColor.primaryColor,
+                      decorationColor:isDark? AppColor.lightBlueColor: AppColor.primaryColor,
                       decorationThickness: 1.5,
                     ),
                   ),
@@ -189,12 +194,12 @@ class _EditEventScreenState extends State<EditEventScreen> {
             SizedBox(height: 16),
             Row(
               children: [
-                Assets.icons.clockIcn.svg(width: 24, height: 24),
+                Assets.icons.clockIcn.svg(width: 24, height: 24,colorFilter: ColorFilter.mode(isDark?AppColor.lightBlueColor:AppColor.primaryColor, BlendMode.srcIn),),
                 SizedBox(width: 4),
                 Text(
                   appLocalization.eventTime,
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColor.blackColor,
+                    color: isDark? AppColor.whiteColor:AppColor.blackColor,
                   ),
                 ),
                 Spacer(),
@@ -207,9 +212,9 @@ class _EditEventScreenState extends State<EditEventScreen> {
                     EventDataModel.formatTimeOfDay(selectedEventTime!)
                     : EventDataModel.formatTimeOfDay(widget.event.eventTime),
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: AppColor.primaryColor,
+                      color: isDark? AppColor.lightBlueColor : AppColor.primaryColor,
                       decoration: TextDecoration.underline,
-                      decorationColor: AppColor.primaryColor,
+                      decorationColor:isDark? AppColor.lightBlueColor:  AppColor.primaryColor,
                       decorationThickness: 1.5,
                     ),
                   ),
@@ -221,6 +226,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
               children: [
                 Expanded(
                   child: CustomElevatedButtonWidget(
+                    backgroundColor: isDark? AppColor.lightBlueColor : AppColor.primaryColor,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         if (!isDataChanged()) {

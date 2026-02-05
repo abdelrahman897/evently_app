@@ -57,5 +57,6 @@ abstract class AppStrings {
   static const String editEventText = "Edit event";
   static const String updateEventText = "Update event";
   static const String darkModeText = "Dark mode";
-
+  static const String searchHeaderText = "Search for event";
+  static const String selectText = "Select Language";
 }

@@ -7,7 +7,9 @@ import 'package:evently_app/core/utils/firestore/firestore_utils.dart';
 import 'package:evently_app/modules/home/home_screen/widget/category_list_widget.dart';
 import 'package:evently_app/modules/home/home_screen/widget/event_card_widget.dart';
 import 'package:evently_app/modules/home/home_screen/widget/evently_app_bar_widget.dart';
+import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
+     bool  isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
+     bool isEnglish = appSettingsProvider.currentLanguage == 'en';
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -29,18 +34,22 @@ class _HomeScreenState extends State<HomeScreen> {
             slivers: [
               SliverToBoxAdapter(child: EventlyAppBarWidget()),
               SliverToBoxAdapter(
-                child: CategoryListWidget(
-                  selectedItem: selectedIndex,
-                  onCategoryChanged: (index) {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
+                child: Directionality(
+                  textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
+                  child: CategoryListWidget(
+                    isHomeScreen: true,
+                    selectedItem: selectedIndex,
+                    onCategoryChanged: (index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                  ),
                 ),
               ),
               StreamBuilder<QuerySnapshot<EventDataModel>>(
-                stream: FirestoreUtils.getStreamDataFromFirestore(
-                  EventCategoryModel.categoryList[selectedIndex].id,
+                stream:selectedIndex == 0 ? FirestoreUtils.getStreamAllDataFromFirestore() :  FirestoreUtils.getStreamDataFromFirestore(
+                  EventCategoryModel.categoryList[selectedIndex-1].id,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
@@ -53,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Center(child: CircularProgressIndicator()),
                     );
                   }
+
                   var docs = snapshot.data?.docs ?? [];
 
                   if (docs.isEmpty) {
@@ -63,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )),
                     );
                   }
+
                   List<EventDataModel> dataList =
                       docs.map((element) {
                         return element.data();
@@ -90,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.pushNamed(context, PagesRouteName.addEventScreen);
           },
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: isDark? AppColor.lightBlueColor:AppColor.primaryColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),

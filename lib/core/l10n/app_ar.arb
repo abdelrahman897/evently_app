@@ -55,5 +55,6 @@
   "eventDescription": "وصف الحدث....",
   "editEvent": "تعديل الحدث",
   "updateEvent": "تحديث الحدث",
-  "darkMode": "الوضع الداكن"
+  "darkMode": "الوضع الداكن",
+  "selectText": "اختر اللغة"
 }

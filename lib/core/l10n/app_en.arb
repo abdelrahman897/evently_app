@@ -55,5 +55,6 @@
   "eventDescription": "Event Description....",
   "editEvent": "Edit event",
   "updateEvent": "Update event",
-  "darkMode": "Dark mode"
+  "darkMode": "Dark mode",
+  "selectText" : "Select Language"
 }

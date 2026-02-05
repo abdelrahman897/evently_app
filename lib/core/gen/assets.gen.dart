@@ -182,9 +182,15 @@ class $AssetsImagesGen {
   AssetGenImage get exhibitionLightBackgroundImg =>
       const AssetGenImage('assets/images/exhibition_light_background_img.png');
 
-  /// File path: assets/images/forget_password_background_img.png
-  AssetGenImage get forgetPasswordBackgroundImg =>
-      const AssetGenImage('assets/images/forget_password_background_img.png');
+  /// File path: assets/images/forget_password_dark_background_img.png
+  AssetGenImage get forgetPasswordDarkBackgroundImg => const AssetGenImage(
+    'assets/images/forget_password_dark_background_img.png',
+  );
+
+  /// File path: assets/images/forget_password_light_background_img.png
+  AssetGenImage get forgetPasswordLightBackgroundImg => const AssetGenImage(
+    'assets/images/forget_password_light_background_img.png',
+  );
 
   /// File path: assets/images/header_logo_background_img.png
   AssetGenImage get headerLogoBackgroundImg =>
@@ -198,21 +204,45 @@ class $AssetsImagesGen {
   AssetGenImage get meetingLightBackgroundImg =>
       const AssetGenImage('assets/images/meeting_light_background_img.png');
 
-  /// File path: assets/images/onboarding_first_background_img.png
-  AssetGenImage get onboardingFirstBackgroundImg =>
-      const AssetGenImage('assets/images/onboarding_first_background_img.png');
+  /// File path: assets/images/onboarding_first_dark_background_img.png
+  AssetGenImage get onboardingFirstDarkBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_first_dark_background_img.png',
+  );
 
-  /// File path: assets/images/onboarding_fourth_background_img.png
-  AssetGenImage get onboardingFourthBackgroundImg =>
-      const AssetGenImage('assets/images/onboarding_fourth_background_img.png');
+  /// File path: assets/images/onboarding_first_light_background_img.png
+  AssetGenImage get onboardingFirstLightBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_first_light_background_img.png',
+  );
 
-  /// File path: assets/images/onboarding_second_background_img.png
-  AssetGenImage get onboardingSecondBackgroundImg =>
-      const AssetGenImage('assets/images/onboarding_second_background_img.png');
+  /// File path: assets/images/onboarding_fourth_dark_background_img.png
+  AssetGenImage get onboardingFourthDarkBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_fourth_dark_background_img.png',
+  );
 
-  /// File path: assets/images/onboarding_third_background_img.png
-  AssetGenImage get onboardingThirdBackgroundImg =>
-      const AssetGenImage('assets/images/onboarding_third_background_img.png');
+  /// File path: assets/images/onboarding_fourth_light_background_img.png
+  AssetGenImage get onboardingFourthLightBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_fourth_light_background_img.png',
+  );
+
+  /// File path: assets/images/onboarding_second_dark_background_img.png
+  AssetGenImage get onboardingSecondDarkBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_second_dark_background_img.png',
+  );
+
+  /// File path: assets/images/onboarding_second_light_background_img.png
+  AssetGenImage get onboardingSecondLightBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_second_light_background_img.png',
+  );
+
+  /// File path: assets/images/onboarding_third_dark_background_img.png
+  AssetGenImage get onboardingThirdDarkBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_third_dark_background_img.png',
+  );
+
+  /// File path: assets/images/onboarding_third_light_background_img.png
+  AssetGenImage get onboardingThirdLightBackgroundImg => const AssetGenImage(
+    'assets/images/onboarding_third_light_background_img.png',
+  );
 
   /// File path: assets/images/profile_background_img.png
   AssetGenImage get profileBackgroundImg =>
@@ -236,14 +266,19 @@ class $AssetsImagesGen {
     eventlySplashBackgroundImg,
     exhibitionDarkBackgroundImg,
     exhibitionLightBackgroundImg,
-    forgetPasswordBackgroundImg,
+    forgetPasswordDarkBackgroundImg,
+    forgetPasswordLightBackgroundImg,
     headerLogoBackgroundImg,
     meetingDarkBackgroundImg,
     meetingLightBackgroundImg,
-    onboardingFirstBackgroundImg,
-    onboardingFourthBackgroundImg,
-    onboardingSecondBackgroundImg,
-    onboardingThirdBackgroundImg,
+    onboardingFirstDarkBackgroundImg,
+    onboardingFirstLightBackgroundImg,
+    onboardingFourthDarkBackgroundImg,
+    onboardingFourthLightBackgroundImg,
+    onboardingSecondDarkBackgroundImg,
+    onboardingSecondLightBackgroundImg,
+    onboardingThirdDarkBackgroundImg,
+    onboardingThirdLightBackgroundImg,
     profileBackgroundImg,
     sportDarkBackgroundImg,
     sportLightBackgroundImg,

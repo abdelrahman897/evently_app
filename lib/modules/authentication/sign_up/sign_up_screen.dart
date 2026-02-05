@@ -8,10 +8,12 @@ import 'package:evently_app/core/utils/authentication/firebase_auth/firebase_aut
 import 'package:evently_app/core/widget/custom_app_bar_widget.dart';
 import 'package:evently_app/core/widget/custom_elevated_button_widget.dart';
 import 'package:evently_app/core/widget/custom_text_form_field_widget.dart';
+import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -41,6 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final appLocalizations = AppLocalizations.of(context)!;
+    final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
+     bool  isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
     return Scaffold(
       appBar: CustomAppBarWidget(
         customTitleWidget: Assets.images.headerLogoBackgroundImg.image(
@@ -61,6 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 24),
               CustomTextFormFieldWidget(
+                isDark: isDark,
                 controller: userNameController,
                 text: appLocalizations.enterName,
                 validator: (value) {
@@ -79,6 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 16),
               CustomTextFormFieldWidget(
+                isDark: isDark,
                 controller: emailController,
                 text: appLocalizations.enterEmail,
                 validator: (value) {
@@ -97,6 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 16),
               CustomTextFormFieldWidget(
+                isDark: isDark,
                 controller: passwordController,
                 maxLines: 1,
                 validator: (value) {
@@ -131,6 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 16),
               CustomTextFormFieldWidget(
+                isDark: isDark,
                 controller: confirmPasswordController,
                 maxLines: 1,
                 validator: (value) {
@@ -171,38 +179,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (_formKey.currentState!.validate()) {
                           EasyLoading.show();
 
-                          bool success =
-                              await FirebaseAuthUtils.singInWithEmailAndPassword(
-                                emailController.text,
-                                passwordController.text,
-                              );
+                          bool success = await FirebaseAuthUtils.singUpWithEmailAndPassword(
+                            emailController.text,
+                            passwordController.text,
+                          );
 
                           if (success) {
-                            var user = FirebaseAuth.instance.currentUser;
-                            await user?.reload();
-                            user =
-                                FirebaseAuth
-                                    .instance
-                                    .currentUser;
-
-                            if (user != null && user.emailVerified) {
-                              EasyLoading.dismiss();
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                PagesRouteName.homeLayoutScreen,
-                                (route) => false,
-                              );
-                            } else {
-                              EasyLoading.dismiss();
-                              ToastMessage.showErrorMessage(
-                                "Please verify your email first.",
-                              );
-                            }
+                            EasyLoading.dismiss();
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              PagesRouteName.signInScreen,
+                                  (route) => false,
+                            );
                           } else {
                             EasyLoading.dismiss();
                           }
                         }
                       },
+                      backgroundColor: isDark ? AppColor.lightBlueColor: AppColor.primaryColor,
                       customChildWidget: Text(
                         appLocalizations.signUp,
                         style: theme.textTheme.titleLarge,
@@ -213,34 +207,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               SizedBox(height: 24),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: appLocalizations.alreadyHaveAccount,
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    WidgetSpan(
-                      child: Bounceable(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            PagesRouteName.signInScreen,
-                          );
-                        },
-                        child: Text(
-                          appLocalizations.login,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColor.primaryColor,
-                            decorationThickness: 1.5,
-                            color: AppColor.primaryColor,
+              Center(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: appLocalizations.alreadyHaveAccount,
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                      WidgetSpan(
+                        child: Bounceable(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              PagesRouteName.signInScreen,
+                            );
+                          },
+                          child: Text(
+                            appLocalizations.login,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              decoration: TextDecoration.underline,
+                              decorationColor:isDark ? AppColor.lightBlueColor: AppColor.primaryColor,
+                              decorationThickness: 1.5,
+                              color: isDark ? AppColor.lightBlueColor: AppColor.primaryColor,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 32),
@@ -249,16 +245,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   Expanded(
                     child: Divider(
-                      color: AppColor.strokeColor,
+                      color:isDark ? AppColor.blueColor: AppColor.strokeColor,
                       thickness: 1,
                       endIndent: 15,
                       indent: 15,
                     ),
                   ),
-                  Text(appLocalizations.or, style: theme.textTheme.bodyLarge),
+                  Text(appLocalizations.or, style: theme.textTheme.bodyLarge?.copyWith(
+                    color: isDark ? AppColor.lightBlueColor: AppColor.strokeColor,
+                  ),),
                   Expanded(
                     child: Divider(
-                      color: AppColor.strokeColor,
+                      color: isDark ? AppColor.blueColor: AppColor.strokeColor,
                       thickness: 1,
                       endIndent: 15,
                       indent: 15,
@@ -288,11 +286,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(width: 4),
                           Text(
                             appLocalizations.signUpWithGoogle,
-                            style: theme.textTheme.titleMedium,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: isDark ? AppColor.lightBlueColor : AppColor.primaryColor,
+                            ),
                           ),
                         ],
                       ),
-                      backgroundColor: AppColor.whiteColor,
+                      backgroundColor: isDark ? AppColor.blueColor : AppColor.whiteColor,
                     ),
                   ),
                 ],

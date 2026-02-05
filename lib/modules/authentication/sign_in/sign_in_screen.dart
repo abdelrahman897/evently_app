@@ -8,9 +8,12 @@ import 'package:evently_app/core/utils/authentication/firebase_auth/firebase_aut
 import 'package:evently_app/core/widget/custom_app_bar_widget.dart';
 import 'package:evently_app/core/widget/custom_elevated_button_widget.dart';
 import 'package:evently_app/core/widget/custom_text_form_field_widget.dart';
+import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
 
@@ -28,10 +31,13 @@ class _SignInScreenState extends State<SignInScreen> {
   final RegExp regexPassword = RegExp(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$");
 
   bool isActive = true ;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final appLocalizations =AppLocalizations.of(context)!;
+    final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
+     bool isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
     return Scaffold(
       appBar: CustomAppBarWidget(
         customTitleWidget: Assets.images.headerLogoBackgroundImg.image(
@@ -43,6 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
         key: _formKey,
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 appLocalizations.headerLogin,
@@ -53,6 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
               CustomTextFormFieldWidget(
                 controller: emailController,
                 text: appLocalizations.enterEmail,
+                isDark: isDark,
                 validator: (value){
                   if ( value == null || value.isEmpty) {
                     return "Email is required , Check Email.";
@@ -71,6 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
               CustomTextFormFieldWidget(
                 controller: passwordController,
                 maxLines: 1,
+                isDark: isDark,
                 validator: (value){
                   if ( value == null || value.isEmpty) {
                     return "Password is required , Check Password.";
@@ -109,9 +118,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(
                       appLocalizations.forgetPassword,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColor.primaryColor,
+                        color: isDark? AppColor.lightBlueColor:AppColor.primaryColor,
                         decorationThickness: 1.5,
-                        decorationColor: AppColor.primaryColor,
+                        decorationColor: isDark? AppColor.lightBlueColor :AppColor.primaryColor,
                         decoration: TextDecoration.underline,
                       ),
                       textAlign: TextAlign.end,
@@ -124,47 +133,72 @@ class _SignInScreenState extends State<SignInScreen> {
                 children: [
                   Expanded(
                     child: CustomElevatedButtonWidget(
-                      onPressed: (){
-                        if(_formKey.currentState!.validate()){
+                      onPressed: ()async{
+                        if(_formKey.currentState!.validate()) {
                           EasyLoading.show();
-                          FirebaseAuthUtils.singInWithEmailAndPassword(emailController.text, passwordController.text).then((value){
-                            EasyLoading.dismiss();
-                            Navigator.pushNamedAndRemoveUntil(context, PagesRouteName.homeLayoutScreen,(route) => false,);
-                          });
+                          bool success = await FirebaseAuthUtils
+                              .singInWithEmailAndPassword(
+                              emailController.text,
+                              passwordController.text
+                          );
+                          if (success) {
+                            var user = FirebaseAuth.instance.currentUser;
 
+                            await user
+                        ?.reload();
+                        user = FirebaseAuth.instance.currentUser;
+
+                        if (user != null && user.emailVerified) {
+                        EasyLoading.dismiss();
+                        Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        PagesRouteName.homeLayoutScreen,
+                        (route) => false,
+                        );
+                        } else {
+                        await FirebaseAuthUtils.singOut();
+                        EasyLoading.dismiss();
+                        ToastMessage.showErrorMessage("Please verify your email first. Check your inbox.");
                         }
+                        } else {
+                        EasyLoading.dismiss();
+                        }
+                      }
                       },
+                      backgroundColor: isDark ? AppColor.lightBlueColor: AppColor.primaryColor,
                       customChildWidget: Text(appLocalizations.login,style: theme.textTheme.titleLarge,textAlign: TextAlign.center,),
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 48),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: appLocalizations.doNotHaveAccount,
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    WidgetSpan(
-                      child: Bounceable(
-                        onTap: () {
-                          Navigator.pushNamed(context, PagesRouteName.signUpScreen);
-                        },
-                        child: Text(
-                          appLocalizations.signUp,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: AppColor.primaryColor,
-                            decoration:TextDecoration.underline,
-                            decorationColor: AppColor.primaryColor,
-                            decorationThickness: 1.5,
+              Center(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: appLocalizations.doNotHaveAccount,
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                      WidgetSpan(
+                        child: Bounceable(
+                          onTap: () {
+                            Navigator.pushNamed(context, PagesRouteName.signUpScreen);
+                          },
+                          child: Text(
+                            appLocalizations.signUp,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: isDark ? AppColor.lightBlueColor : AppColor.primaryColor,
+                              decoration:TextDecoration.underline,
+                              decorationColor: isDark ? AppColor.lightBlueColor : AppColor.primaryColor,
+                              decorationThickness: 1.5,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 32),
@@ -172,7 +206,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 children: [
                   Expanded(
                     child: Divider(
-                      color: AppColor.strokeColor,
+                      color: isDark ? AppColor.blueColor:AppColor.strokeColor,
                       thickness: 1,
                       endIndent: 15,
                       indent: 15,
@@ -181,7 +215,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Text(appLocalizations.or, style: theme.textTheme.bodyLarge),
                   Expanded(
                     child: Divider(
-                      color: AppColor.strokeColor,
+                      color: isDark ? AppColor.blueColor:AppColor.strokeColor,
                       thickness: 1,
                       endIndent: 15,
                       indent: 15,
@@ -206,7 +240,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           });
                         }
                       },
-                      backgroundColor: AppColor.whiteColor,
+                      backgroundColor:isDark ? AppColor.secondDarkBlueColor : AppColor.whiteColor,
                       customChildWidget:
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +250,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 24,
                           ),
                           SizedBox(width: 4,),
-                          Text(appLocalizations.loginWithGoogle,style: theme.textTheme.titleMedium,)
+                          Text(appLocalizations.loginWithGoogle,style: theme.textTheme.titleMedium?.copyWith(
+                            color: isDark ? AppColor.lightBlueColor: AppColor.primaryColor,
+                          ),)
                         ],
                       ),
                     ),

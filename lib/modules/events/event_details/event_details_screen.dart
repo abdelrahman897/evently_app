@@ -9,9 +9,11 @@ import 'package:evently_app/core/utils/firestore/firestore_utils.dart';
 import 'package:evently_app/core/widget/custom_app_bar_widget.dart';
 import 'package:evently_app/core/widget/custom_button_widget.dart';
 import 'package:evently_app/core/widget/custom_icon_button_widget.dart';
+import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   final EventDataModel event;
@@ -29,9 +31,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   Widget build(BuildContext context) {
     final appLocalization = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
+     bool  isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
     return Scaffold(
       appBar: CustomAppBarWidget(
         customLeadingWidget: CustomIconButtonWidget(
+          isDark: isDark,
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(
               context,
@@ -43,11 +48,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         customTitleWidget: Text(
           appLocalization.eventDetails,
           style: theme.textTheme.titleMedium?.copyWith(
-            color: AppColor.blackColor,
+            color:isDark ? AppColor.whiteColor : AppColor.blackColor,
           ),
         ),
         customActionListWidget: [
           CustomButtonWidget(
+            isDark: isDark,
             lengthOfWidth: 32,
             lengthOfHeight: 32,
             onTap: () {
@@ -57,11 +63,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 arguments: widget.event,
               );
             },
-            backgroundColor: AppColor.whiteColor,
+            backgroundColor: isDark ? AppColor.secondDarkBlueColor : AppColor.whiteColor,
             customChildWidget: Assets.icons.editIcn.svg(width: 24, height: 24),
           ),
           SizedBox(width: 8),
           CustomButtonWidget(
+            isDark: isDark,
             lengthOfWidth: 32,
             lengthOfHeight: 32,
             onTap: () async {
@@ -81,7 +88,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 );
               }
             },
-            backgroundColor: AppColor.whiteColor,
+            backgroundColor: isDark? AppColor.secondDarkBlueColor : AppColor.whiteColor,
             customChildWidget: Assets.icons.deleteIcn.svg(
               width: 24,
               height: 24,
@@ -94,19 +101,22 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(widget.event.categoryLightImage),
+            Image.asset(isDark ? widget.event.categoryDarkImage : widget.event.categoryLightImage),
             SizedBox(height: 16),
             Text(
               widget.event.eventTitle,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColor.blackColor,
+                color:isDark? AppColor.whiteColor : AppColor.blackColor,
               ),
             ),
             SizedBox(height: 16),
             Container(
               decoration: BoxDecoration(
+                border: Border.all(
+                  color: isDark?AppColor.lightBlueColor:Colors.transparent,
+                ),
                 borderRadius: BorderRadius.circular(16.0),
-                color: AppColor.whiteColor,
+                color: isDark? AppColor.secondDarkBlueColor :AppColor.whiteColor,
               ),
               child: Row(
                 children: [
@@ -117,12 +127,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       height: 44,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: AppColor.customWhiteColor,
+                        color: isDark? AppColor.secondDarkBlueColor : AppColor.customWhiteColor,
                         borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: isDark ? AppColor.lightBlueColor : Colors.transparent,
+                        ),
                       ),
                       child: Assets.icons.calendarIcn.svg(
                         width: 24,
                         height: 24,
+                        colorFilter: ColorFilter.mode(isDark?AppColor.lightBlueColor:AppColor.primaryColor, BlendMode.srcIn),
                       ),
                     ),
                   ),
@@ -132,13 +146,13 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       Text(
                         DateFormat("dd MMM").format(widget.event.eventDate),
                         style: theme.textTheme.bodyLarge?.copyWith(
-                          color: AppColor.blackColor,
+                          color: isDark ? AppColor.lightBlueColor : AppColor.blackColor,
                         ),
                       ),
                       Text(
                         EventDataModel.formatTimeOfDay(widget.event.eventTime),
                         style: theme.textTheme.bodyLarge?.copyWith(
-                          color: AppColor.hintTextColor,
+                          color:isDark ? AppColor.whiteColor : AppColor.hintTextColor,
                         ),
                       ),
                     ],
@@ -150,19 +164,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             Text(
               appLocalization.description,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: AppColor.blackColor,
+                color:isDark?AppColor.whiteColor :  AppColor.blackColor,
               ),
             ),
             SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: AppColor.whiteColor,
+                color: isDark ? AppColor.secondDarkBlueColor :AppColor.whiteColor,
               ),
               child: Text(
                 widget.event.eventDescription,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColor.blackColor,
+                  color:isDark? AppColor.whiteColor:  AppColor.blackColor,
                 ),
               ),
             ),

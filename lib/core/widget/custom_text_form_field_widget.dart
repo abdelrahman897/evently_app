@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormFieldWidget extends StatelessWidget {
   final String text;
+  final bool isDark;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool isPassword;
@@ -18,7 +19,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
     this.isPassword = false,
     this.customPrefixWidget,
     this.customSuffixWidget,
-    this.maxLines = 1,
+    this.maxLines = 1, required this.isDark,
   });
 
   @override
@@ -26,7 +27,6 @@ class CustomTextFormFieldWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return TextFormField(
       controller: controller,
-      autovalidateMode: AutovalidateMode.always,
       validator: validator,
       style: theme.textTheme.bodyMedium,
       cursorColor: AppColor.darkGreyColor,
@@ -34,10 +34,12 @@ class CustomTextFormFieldWidget extends StatelessWidget {
       maxLines: maxLines,
       decoration: InputDecoration(
         filled: true,
-        fillColor: AppColor.whiteColor,
+        fillColor: isDark? AppColor.secondDarkBlueColor : AppColor.whiteColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide.none,
+          borderSide: isDark ? BorderSide(
+            color: AppColor.lightBlueColor,
+          ):BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
@@ -45,7 +47,9 @@ class CustomTextFormFieldWidget extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide.none,
+          borderSide: isDark ? BorderSide(
+            color: AppColor.lightBlueColor,
+          ):BorderSide.none,
         ),
         hintStyle: theme.textTheme.bodyMedium,
         hintText: text,
@@ -59,7 +63,9 @@ class CustomTextFormFieldWidget extends StatelessWidget {
         ) ,
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide.none,
+          borderSide: isDark ? BorderSide(
+            color: AppColor.lightBlueColor,
+          ):BorderSide.none,
         ),
       ),
     );

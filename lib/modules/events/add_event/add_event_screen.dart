@@ -12,10 +12,12 @@ import 'package:evently_app/core/widget/custom_choice_chip_widget.dart';
 import 'package:evently_app/core/widget/custom_elevated_button_widget.dart';
 import 'package:evently_app/core/widget/custom_icon_button_widget.dart';
 import 'package:evently_app/core/widget/custom_text_form_field_widget.dart';
+import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({super.key});
@@ -69,9 +71,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
     final appLocalization = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final categoryList = EventCategoryModel.categoryList;
+    final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
+     bool  isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
     return Scaffold(
       appBar: CustomAppBarWidget(
         customLeadingWidget: CustomIconButtonWidget(
+          isDark: isDark,
           onPressed: () {
             Navigator.pushReplacementNamed(context, PagesRouteName.homeLayoutScreen);
           },
@@ -79,7 +84,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         customTitleWidget: Text(
           appLocalization.addEvent,
           style: theme.textTheme.titleMedium?.copyWith(
-            color: AppColor.blackColor,
+            color: isDark ? AppColor.whiteColor : AppColor.blackColor,
           ),
         ),
       ),
@@ -90,7 +95,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(categoryList[selectedItem].lightImagePath),
+              Image.asset( isDark ? categoryList[selectedItem].darkImagePath : categoryList[selectedItem].lightImagePath),
               SizedBox(height: 16),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -104,7 +109,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         color:
                             isSelected
                                 ? AppColor.whiteColor
-                                : AppColor.primaryColor,
+                                : (isDark ? AppColor.lightBlueColor : AppColor.primaryColor),
                       ),
                       selected: isSelected,
                       onSelected: (selected) {
@@ -120,11 +125,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
               Text(
                 appLocalization.title,
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColor.blackColor,
+                  color: isDark? AppColor.whiteColor : AppColor.blackColor,
                 ),
               ),
               SizedBox(height: 8),
               CustomTextFormFieldWidget(
+                isDark: isDark,
                 text: appLocalization.eventTitle,
                 controller: titleController,
                 validator: (value) {
@@ -138,11 +144,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
               Text(
                 appLocalization.description,
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColor.blackColor,
+                  color: isDark ? AppColor.whiteColor : AppColor.blackColor,
                 ),
               ),
               SizedBox(height: 8),
               CustomTextFormFieldWidget(
+                isDark: isDark,
                 text: appLocalization.eventDescription,
                 maxLines: 4,
                 controller: descriptionController,
@@ -156,12 +163,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
               SizedBox(height: 16),
               Row(
                 children: [
-                  Assets.icons.calendarIcn.svg(width: 24, height: 24),
+                  Assets.icons.calendarIcn.svg(width: 24, height: 24,colorFilter: ColorFilter.mode(isDark?AppColor.lightBlueColor:AppColor.primaryColor, BlendMode.srcIn),),
                   SizedBox(width: 4),
                   Text(
                     appLocalization.eventDate,
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      color: AppColor.blackColor,
+                      color:isDark ? AppColor.whiteColor : AppColor.blackColor,
                     ),
                   ),
                   Spacer(),
@@ -174,9 +181,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ? DateFormat("dd,MMM,yyyy").format(selectedEventDate!)
                           : appLocalization.chooseDate,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColor.primaryColor,
+                        color:isDark? AppColor.lightBlueColor : AppColor.primaryColor,
                         decoration: TextDecoration.underline,
-                        decorationColor: AppColor.primaryColor,
+                        decorationColor:isDark? AppColor.lightBlueColor : AppColor.primaryColor,
                         decorationThickness: 1.5,
                       ),
                     ),
@@ -186,12 +193,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
               SizedBox(height: 16),
               Row(
                 children: [
-                  Assets.icons.clockIcn.svg(width: 24, height: 24),
+                  Assets.icons.clockIcn.svg(width: 24, height: 24,colorFilter: ColorFilter.mode(isDark?AppColor.lightBlueColor:AppColor.primaryColor, BlendMode.srcIn),),
                   SizedBox(width: 4),
                   Text(
                     appLocalization.eventTime,
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      color: AppColor.blackColor,
+                      color: isDark? AppColor.whiteColor: AppColor.blackColor,
                     ),
                   ),
                   Spacer(),
@@ -204,9 +211,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ? EventDataModel.formatTimeOfDay(selectedEventTime!)
                           : appLocalization.chooseTime,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColor.primaryColor,
+                        color: isDark ? AppColor.lightBlueColor : AppColor.primaryColor,
                         decoration: TextDecoration.underline,
-                        decorationColor: AppColor.primaryColor,
+                        decorationColor: isDark ? AppColor.lightBlueColor : AppColor.primaryColor,
                         decorationThickness: 1.5,
                       ),
                     ),
@@ -218,6 +225,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 children: [
                   Expanded(
                     child: CustomElevatedButtonWidget(
+                      backgroundColor: isDark ? AppColor.lightBlueColor :AppColor.primaryColor,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           if (selectedEventDate == null || selectedEventTime == null) {

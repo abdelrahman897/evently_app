@@ -3,6 +3,7 @@ import 'package:evently_app/core/l10n/app_localizations.dart';
 import 'package:evently_app/core/theme/app_color.dart';
 import 'package:evently_app/core/widget/custom_button_widget.dart';
 import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,9 @@ class _EventlyAppBarWidgetState extends State<EventlyAppBarWidget> {
     final theme = Theme.of(context);
     final appLocalization = AppLocalizations.of(context)!;
     final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
-    bool isEnglish = appSettingsProvider.currentLanguage == 'EN';
+    bool  isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
+    bool isEnglish = appSettingsProvider.currentLanguage == 'en';
+    final currentUser = FirebaseAuth.instance.currentUser;
     return ListTile(
       title: Text(appLocalization.titleHome,style: theme.textTheme.bodyMedium,),
       trailing: SizedBox(
@@ -32,6 +35,7 @@ class _EventlyAppBarWidgetState extends State<EventlyAppBarWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomButtonWidget(
+              isDark: isDark,
               backgroundColor:
               isActiveTheme ? AppColor.whiteColor : AppColor.darkBlueColor,
               onTap: () {
@@ -70,17 +74,19 @@ class _EventlyAppBarWidgetState extends State<EventlyAppBarWidget> {
             ),
             SizedBox(width: 8),
             CustomButtonWidget(
+              isDark: isDark,
               onTap: () {
                 if (isEnglish) {
+                  setState(() {
                   appSettingsProvider.changeCurrentLanguage('ar');
                   isActiveLanguage = !isActiveLanguage;
+                  });
                 } else {
+                  setState(() {
                   appSettingsProvider.changeCurrentLanguage('en');
                   isActiveLanguage = !isActiveLanguage;
+                  });
                 }
-                setState(() {
-
-                });
               },
               lengthOfWidth: 34,
               lengthOfHeight: 32,
@@ -99,8 +105,8 @@ class _EventlyAppBarWidgetState extends State<EventlyAppBarWidget> {
         ),
       ),
       subtitle: Text(
-        appLocalization.subTitle,
-        style: theme.textTheme.titleLarge?.copyWith(color: AppColor.blackColor),
+        currentUser?.displayName ?? "User Name",
+        style: theme.textTheme.titleLarge?.copyWith(color: isDark? AppColor.whiteColor:AppColor.blackColor),
       ),
     );
   }

@@ -35,6 +35,11 @@ abstract class FirestoreUtils {
     return eventList;
   }
 
+static Stream<QuerySnapshot<EventDataModel>> getStreamAllDataFromFirestore(){
+  var collectionRef = getCollectionRef();
+  return collectionRef.snapshots();
+}
+
   static Stream<QuerySnapshot<EventDataModel>> getStreamDataFromFirestore(
       String categoryId,) {
     var collectionRef = getCollectionRef().where(

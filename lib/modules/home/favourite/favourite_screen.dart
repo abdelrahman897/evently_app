@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently_app/core/constant/app_strings.dart';
 import 'package:evently_app/core/gen/assets.gen.dart';
 import 'package:evently_app/core/model/event_data_model.dart';
 import 'package:evently_app/core/routes/pages_route_name.dart';
 import 'package:evently_app/core/utils/firestore/firestore_utils.dart';
 import 'package:evently_app/core/widget/custom_text_form_field_widget.dart';
 import 'package:evently_app/modules/home/home_screen/widget/event_card_widget.dart';
+import 'package:evently_app/modules/provider/app_provider/app_settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
@@ -21,6 +24,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appSettingsProvider = Provider.of<AppSettingsProvider>(context);
+     bool  isDark = appSettingsProvider.currentThemeMode == ThemeMode.dark;
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -28,7 +33,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           child: Column(
             children: [
               CustomTextFormFieldWidget(
-                text: "Search for event",
+                isDark: isDark,
+                text: AppStrings.searchHeaderText,
                 customSuffixWidget: Assets.icons.searchIcn.svg(
                   width: 24,
                   height: 24,

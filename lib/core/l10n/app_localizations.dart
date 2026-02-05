@@ -436,6 +436,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark mode'**
   String get darkMode;
+
+  /// No description provided for @selectText.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectText;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
